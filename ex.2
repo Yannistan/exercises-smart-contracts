@@ -113,11 +113,11 @@ contract FirstErc20 {
         _;
     }
     
-    function burn(address _account, uint8 _nbtokens) public onlyOwner returns(bool) {
-        require((_totalSupply/10**18) >= _nbtokens), "Number of tokens to sell are grater than existing tokens");
-        _totalSupply/10**18 -= _nbtokens;
-        _balances[_account]  -= _nbtokens*10**18;
-        emit Transfer(address(0), _account, _nbtokens);
+    function burn(address _account, uint8 _amount) public onlyOwner returns(bool) {
+        require((_totalSupply >= _amount), "Number of tokens to sell are greater than number of existing tokens");
+        _totalSupply -= _amount;
+        _balances[_account]  -= _amount;
+        emit Transfer(address(0), _account, _amount);
         return true;
         
     }
@@ -129,4 +129,5 @@ contract FirstErc20 {
     // a call to `approve`. `_value` is the new allowance.
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 }
+
 
