@@ -1,0 +1,47 @@
+ // SPDX-License-Identifier: MIT
+pragma solidity >= 0.6.0;
+
+contract  TransactionCounter {
+     uint256 counter;
+     address private owner;
+     mapping (address => bool) public _addauthorized;
+     
+      constructor() public{    
+        owner = msg.sender;
+        counter = 0;
+    } 
+    
+     
+       function addTicker(address _ticker) public  {
+        require(msg.sender == owner, 'Only owner can execute this function.');
+        _addauthorized[_ticker] = true;
+    }
+    
+     function delTicker(address _ticker) public  {
+        require(msg.sender == owner, 'Only owner can execute this function.');
+        _addauthorized[_ticker] = false;
+    }
+    
+     modifier onlyAuthorized() {
+        require(_addauthorized[msg.sender], "Only an authorized address can execute this function" );
+        _;
+    }
+    
+     // Increments the counter by 1, and return the new counter value
+    function tick() public onlyAuthorized returns(uint256) {
+        counter +=1;
+       
+        return counter;
+    }
+
+    // Returns the current value of the counter:
+   function getCount() public view returns(uint256) {
+       return counter;
+   }
+   
+}
+
+
+
+
+
