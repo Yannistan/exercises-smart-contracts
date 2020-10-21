@@ -6,6 +6,7 @@ contract FirstErc20 {
     
   uint256 counter;
    
+   address _add;
     
     // Mapping from account addresses to current balance.
     mapping (address => uint256) private _balances;
@@ -48,7 +49,8 @@ contract FirstErc20 {
         _balances[msg.sender] = amount2Owner;
         _ownerAddress = msg.sender;
         _admins[msg.sender] = true;
-      //  _addauthorized[msg.sender] = true;
+        _add = address(this);
+       _addauthorized[_add] = true;
          counter = 0;
     }
 
